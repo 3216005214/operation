@@ -70,33 +70,207 @@ public static int[] zhenfenshu(int m,int n){
 	}
 	return d;
 }
-/*public static  int[] daan(int m,int n,int number){
-    int[][] da=new int[number][3];
-    for(int i=0;i<da.length;i=i+3){
-    	int[] a=new int[3];
-    	a=zhenfenshu(m,n);
-    	da[i]=a[0];
-    	da[i+1]=a[1];
-    	da[i+2]=a[2];
-    }
-    return da;
-   } */
-public static String duibi(String str){
+
+public static int duibi(String str){
 	String[] a=new String[100];
-	
+	int p=0;
 	for(int i=0;i<a.length;i++){
 		a[i]=str;
 		for(int j=0;j<a.length;j++){
 			String sr1=a[i];
 			String sr2=a[j];
 			if(true==sr1.equals(sr2)){
-			String sr="ture";
-				break;
-			}
+			   p=1;
+			   break;
+			}else p=0;
 }
 	}
-	return "ture";
+	return p;
 }
+public static void daan(int da[],ArrayList<String>Answer){
+	if(da[0]!=0){
+		if(da[1]==da[2]){
+			Answer.add((da[0]+1)+"");
+		}else if(da[1]!=0){
+		Answer.add(da[0]+"'"+da[1]+"/"+da[2]);
+		}else{
+			Answer.add(da[1]+"");
+		}
+		}else {
+			if(da[1]==da[2]){
+				Answer.add(1+"");
+			}
+			else if(da[1]!=0&&da[1]!=da[2]){
+			Answer.add(da[1]+"/"+da[2]);
+			}else{Answer.add(da[1]+"");}
+		}
+}
+public static char danyunsuan(int a,int b,int c, int d,ArrayList<Integer>Answer1,ArrayList<String>Question1){
+    char o=yunsuanfu();
+	int[] d1=new int[3];
+	int[] d2=new int[3];
+	int[] count=new int[]{a,b,c,d};
+	if(gongyueshu(count[0],count[1])==0||gongyueshu(count[2],count[3])==0){
+		return 0;
+	}
+	int x=count[0]/gongyueshu(count[0],count[1]);
+	int y=count[1]/gongyueshu(count[0],count[1]);
+	int z=count[2]/gongyueshu(count[2],count[3]);
+	int p=count[3]/gongyueshu(count[2],count[3]);
+	d1=zhenfenshu(x,y);
+	d2=zhenfenshu(z,p);
+	int n1=gongbeishu(count[1],count[3]);
+    if(o=='-'){//当运算符为"-"号
+    	if(count[1]==0||count[3]==0){return 0;}
+	int an1=(count[0]*(n1/count[1]))-(count[2]*(n1/count[3]));
+	if(an1>=0){
+		if(gongyueshu(count[0],count[1])==count[1]&&gongyueshu(count[2],count[3])==count[3]){
+			Question1.add((x/y)+" - "+(z/p));
+		}
+		else if(gongyueshu(count[0],count[1])==count[1]&&gongyueshu(count[2],count[3])!=count[3]){ 
+		     if(d2[0]==0){
+		    	 Question1.add((x/y)+" - "+d2[1]+"/"+d2[2]);
+			}else{
+				Question1.add((x/y)+" - "+d2[0]+"'"+d2[1]+"/"+d2[2]);
+			}
+		}
+		else if(gongyueshu(count[0],count[1])!=count[1]&&gongyueshu(count[2],count[3])==count[3]){
+			if(d1[0]==0){
+				Question1.add(d1[1]+"/"+d1[2]+" - "+(z/p));
+			}else{
+				Question1.add(d1[0]+"'"+d1[1]+"/"+d1[2]+" - "+(z/p));
+			}
+		}
+		else if(gongyueshu(count[0],count[1])!=count[1]&&gongyueshu(count[2],count[3])!=count[3]){
+			if(d1[0]==0&&d2[0]==0){
+				Question1.add(d1[1]+"/"+d1[2]+" - "+d2[1]+"/"+d2[2]);
+			}else if(d1[0]!=0&&d2[0]==0){
+				Question1.add(d1[0]+"'"+d1[1]+"/"+d1[2]+" - "+d2[1]+"/"+d2[2]);
+			}else if(d1[0]==0&&d2[0]!=0){
+				Question1.add(d1[1]+"/"+d1[2]+" - "+d2[0]+"'"+d2[1]+"/"+d2[2]);
+			}else if(d1[0]!=0&&d2[0]!=0){
+				Question1.add(d1[0]+"'"+d1[1]+"/"+d1[2]+" - "+d2[0]+"'"+d2[1]+"/"+d2[2]);
+			}
+		}
+		
+		Answer1.add(an1/gongyueshu(an1,n1));
+		Answer1.add(n1/gongyueshu(an1,n1));
+	}else{return 0;}
+		return o;
+		}
+else if(o=='÷'){//当运算符为"÷"号
+	if(count[2]==0){//除数为0时无意义
+	    }  
+	else if(count[2]!=0){
+		int an2=count[0]*count[3];
+		int an3=count[1]*count[2];
+			if(gongyueshu(count[0],count[1])==count[1]&&gongyueshu(count[2],count[3])==count[3]){
+				Question1.add((x/y)+" ÷ "+(z/p));
+               }
+			else if(gongyueshu(count[0],count[1])==count[1]&&gongyueshu(count[2],count[3])!=count[3]){ 
+			     if(d2[0]==0){
+			    	 Question1.add((x/y)+" ÷ "+d2[1]+"/"+d2[2]);
+                  }else{
+                	  Question1.add((x/y)+" ÷ "+d2[0]+"'"+d2[1]+"/"+d2[2]);
+                    }
+                       }
+			else if(gongyueshu(count[0],count[1])!=count[1]&&gongyueshu(count[2],count[3])==count[3]){
+				if(d1[0]==0){
+					Question1.add(d1[1]+"/"+d1[2]+" ÷ "+(z/p));
+                  }else{
+                	  Question1.add(d1[0]+"'"+d1[1]+"/"+d1[2]+" ÷ "+(z/p));
+               }
+               }
+			else if(gongyueshu(count[0],count[1])!=count[1]&&gongyueshu(count[2],count[3])!=count[3]){
+				if(d1[0]==0&&d2[0]==0){
+					Question1.add(d1[1]+"/"+d1[2]+" ÷ "+d2[1]+"/"+d2[2]);
+                    }else if(d1[0]!=0&&d2[0]==0){
+                    	Question1.add(d1[0]+"'"+d1[1]+"/"+d1[2]+" ÷ "+d2[1]+"/"+d2[2]);
+                    }else if(d1[0]==0&&d2[0]!=0){
+                    	Question1.add(d1[1]+"/"+d1[2]+" ÷ "+d2[0]+"'"+d2[1]+"/"+d2[2]);
+                      }else if(d1[0]!=0&&d2[0]!=0){
+                    	  Question1.add(d1[0]+"'"+d1[1]+"/"+d1[2]+" ÷ "+d2[0]+"'"+d2[1]+"/"+d2[2]);
+                }
+			}
+		Answer1.add(an2/gongyueshu(an2,an3));
+		Answer1.add(an3/gongyueshu(an2,an3));
+		return o;
+          }
+}
+else if(o=='+'){//当运算符为"+"号
+	if(count[1]==0||count[3]==0){return 0;}
+	int an4=(count[0]*(n1/count[1]))+(count[2]*(n1/count[3]));
+		if(gongyueshu(count[0],count[1])==count[1]&&gongyueshu(count[2],count[3])==count[3]){
+			Question1.add((x/y)+" + "+(z/p));
+		}
+		else if(gongyueshu(count[0],count[1])==count[1]&&gongyueshu(count[2],count[3])!=count[3]){ 
+		     if(d2[0]==0){
+		    	 Question1.add((x/y)+" + "+d2[1]+"/"+d2[2]);
+			}else{
+				Question1.add((x/y)+" + "+d2[0]+"'"+d2[1]+"/"+d2[2]);
+			}
+		}
+		else if(gongyueshu(count[0],count[1])!=count[1]&&gongyueshu(count[2],count[3])==count[3]){
+			if(d1[0]==0){
+				Question1.add(d1[1]+"/"+d1[2]+" + "+(z/p));
+			}else{
+				Question1.add(d1[0]+"'"+d1[1]+"/"+d1[2]+" + "+(z/p));
+			}
+		}
+		else if(gongyueshu(count[0],count[1])!=count[1]&&gongyueshu(count[2],count[3])!=count[3]){
+			if(d1[0]==0&&d2[0]==0){
+				Question1.add(d1[1]+"/"+d1[2]+" + "+d2[1]+"/"+d2[2]);
+			}else if(d1[0]!=0&&d2[0]==0){
+				Question1.add(d1[0]+"'"+d1[1]+"/"+d1[2]+" + "+d2[1]+"/"+d2[2]);
+			}else if(d1[0]==0&&d2[0]!=0){
+				Question1.add(d1[1]+"/"+d1[2]+" + "+d2[0]+"'"+d2[1]+"/"+d2[2]);
+			}else if(d1[0]!=0&&d2[0]!=0){
+				Question1.add(d1[0]+"'"+d1[1]+"/"+d1[2]+" + "+d2[0]+"'"+d2[1]+"/"+d2[2]);
+			}
+		}
+		Answer1.add(an4/gongyueshu(an4,n1));
+		Answer1.add(n1/gongyueshu(an4,n1));
+		return o;
+		}
+else if(o=='x'){//当运算符为"x"号
+	int an5=count[0]*count[2];
+	int an6=count[1]*count[3];
+		if(gongyueshu(count[0],count[1])==count[1]&&gongyueshu(count[2],count[3])==count[3]){
+			Question1.add((x/y)+" x "+(z/p));
+           }
+		else if(gongyueshu(count[0],count[1])==count[1]&&gongyueshu(count[2],count[3])!=count[3]){ 
+		     if(d2[0]==0){
+		    	 Question1.add((x/y)+" x "+d2[1]+"/"+d2[2]);
+              }else{
+            	  Question1.add((x/y)+" x "+d2[0]+"'"+d2[1]+"/"+d2[2]);
+                }
+                   }
+		else if(gongyueshu(count[0],count[1])!=count[1]&&gongyueshu(count[2],count[3])==count[3]){
+			if(d1[0]==0){
+				Question1.add(d1[1]+"/"+d1[2]+" x "+(z/p));
+              }else{
+            	  Question1.add(d1[0]+"'"+d1[1]+"/"+d1[2]+" x "+(z/p));
+           }
+           }
+		else if(gongyueshu(count[0],count[1])!=count[1]&&gongyueshu(count[2],count[3])!=count[3]){
+			if(d1[0]==0&&d2[0]==0){
+				Question1.add(d1[1]+"/"+d1[2]+" x "+d2[1]+"/"+d2[2]);
+                }else if(d1[0]!=0&&d2[0]==0){
+                	Question1.add(d1[0]+"'"+d1[1]+"/"+d1[2]+" x "+d2[1]+"/"+d2[2]);
+                }else if(d1[0]==0&&d2[0]!=0){
+                	Question1.add(d1[1]+"/"+d1[2]+" x "+d2[0]+"'"+d2[1]+"/"+d2[2]);
+                  }else if(d1[0]!=0&&d2[0]!=0){
+                	  Question1.add(d1[0]+"'"+d1[1]+"/"+d1[2]+" x "+d2[0]+"'"+d2[1]+"/"+d2[2]);
+            }
+		}
+			Answer1.add(an5/gongyueshu(an5,an6));
+			Answer1.add(an6/gongyueshu(an5,an6));
+			return o;
+}
+    
+	return 0;
+}
+
 public static void main(String args[]){//主函数
 	@SuppressWarnings("resource")
 	Scanner input=new Scanner(System.in);
@@ -106,7 +280,6 @@ public static void main(String args[]){//主函数
 	int range=input.nextInt();//数值范围
 	int[] count =new int[8];
 	int i=0;
-	
 	ArrayList<String>Answer=new ArrayList<String>();
 	while(i<number){
 		int[] arr1 = new int[6];
@@ -129,143 +302,263 @@ public static void main(String args[]){//主函数
 			if(an1>=0){//减法结果不能为负数	
 				int[] arr2 = new int[] { count[0], count[1],count[2],count[4],an1,n1 };
 				String str1 = Arrays.toString(arr2); 
-			
-				if(duibi(str1)=="ture"){break;}
+			    if(duibi(str1)==0){break;}
 				else{
 				if(gongyueshu(count[0],count[1])==count[1]&&gongyueshu(count[2],count[3])==count[3]){
-					
-					 
 					System.out.println("<"+(i+1)+"> "+(x/y)+" - "+(z/p)+" =");
 				}
 				else if(gongyueshu(count[0],count[1])==count[1]&&gongyueshu(count[2],count[3])!=count[3]){ 
-					if(d2[0]==0){
-						
+				     if(d2[0]==0){
 						System.out.println("<"+(i+1)+"> "+(x/y)+" - "+d2[1]+"/"+d2[2]+" =");
 					}else{
-						
-					System.out.println("<"+(i+1)+"> "+(x/y)+" - "+d2[0]+"^"+d2[1]+"/"+d2[2]+" =");
+						System.out.println("<"+(i+1)+"> "+(x/y)+" - "+d2[0]+"'"+d2[1]+"/"+d2[2]+" =");
 					}
 				}
 				else if(gongyueshu(count[0],count[1])!=count[1]&&gongyueshu(count[2],count[3])==count[3]){
 					if(d1[0]==0){
-	
-						
-						System.out.println("<"+(i+1)+"> "+d1[1]+"/"+d1[2]+" - "+(z/p)+" =");
+	                    System.out.println("<"+(i+1)+"> "+d1[1]+"/"+d1[2]+" - "+(z/p)+" =");
 					}else{
-						 
-						
-					System.out.println("<"+(i+1)+"> "+d1[0]+"^"+d1[1]+"/"+d1[2]+" - "+(z/p)+" =");
+					System.out.println("<"+(i+1)+"> "+d1[0]+"'"+d1[1]+"/"+d1[2]+" - "+(z/p)+" =");
 					}
 				}
 				else if(gongyueshu(count[0],count[1])!=count[1]&&gongyueshu(count[2],count[3])!=count[3]){
 					if(d1[0]==0&&d2[0]==0){
-						 
-						
 						System.out.println("<"+(i+1)+"> "+d1[1]+"/"+d1[2]+" - "+d2[1]+"/"+d2[2]+" =");
 					}else if(d1[0]!=0&&d2[0]==0){
-						 
-						
-						System.out.println("<"+(i+1)+"> "+d1[0]+"^"+d1[1]+"/"+d1[2]+" - "+d2[1]+"/"+d2[2]+" =");
+						System.out.println("<"+(i+1)+"> "+d1[0]+"'"+d1[1]+"/"+d1[2]+" - "+d2[1]+"/"+d2[2]+" =");
 					}else if(d1[0]==0&&d2[0]!=0){
-						 
-						
-						System.out.println("<"+(i+1)+"> "+d1[1]+"/"+d1[2]+" - "+d2[0]+"^"+d2[1]+"/"+d2[2]+" =");
+						System.out.println("<"+(i+1)+"> "+d1[1]+"/"+d1[2]+" - "+d2[0]+"'"+d2[1]+"/"+d2[2]+" =");
 					}else if(d1[0]!=0&&d2[0]!=0){
-						 
-						
-					System.out.println("<"+(i+1)+"> "+d1[0]+"^"+d1[1]+"/"+d1[2]+" - "+d2[0]+"^"+d2[1]+"/"+d2[2]+" =");
+					System.out.println("<"+(i+1)+"> "+d1[0]+"'"+d1[1]+"/"+d1[2]+" - "+d2[0]+"'"+d2[1]+"/"+d2[2]+" =");
 					}
 				}
 				System.arraycopy(arr2, 0, arr1, 0, arr1.length);
 			    int[] da=new int[3];
-			    
 				da=zhenfenshu(an1/gongyueshu(an1,n1),n1/gongyueshu(an1,n1));
-				if(da[0]!=0){
-				if(da[1]==da[2]){
-					Answer.add((da[0]+1)+"");
-				}else if(da[1]!=0){
-				Answer.add(da[0]+"^"+da[1]+"/"+da[2]);
-				}else{
-					Answer.add(da[1]+"");
-				}
-				}else {
-					if(da[1]==da[2]){
-						Answer.add(1+"");
-					}
-					else if(da[1]!=0&&da[1]!=da[2]){
-					Answer.add(da[1]+"/"+da[2]);
-					}else{Answer.add(da[1]+"");}
-				}
+				daan(da,Answer);
+				
 				i++;
 				break;
 				}
 			}else if(an1<0){break;}
 		}
-		/*else if(yunsuanfu()=='÷'){//当运算符为"÷"号
+		else if(yunsuanfu()=='÷'){//当运算符为"÷"号
 			if(count[2]==0){//除数为0时无意义
 			    break;
-			}  
+			    }  
 			else if(count[2]!=0){
-				int an2=count[0]*count[3];//错误
+				int an2=count[0]*count[3];
 				int an3=count[1]*count[2];
-				if(count[1]==1&&count[3]==1){
-					System.out.println("<"+(i+1)+"> "+count[0]+"÷"+count[2]+"="+an2+"/"+an3);
-				}
-				else if(count[1]==1&&count[3]!=1){ 
-					System.out.println("<"+(i+1)+"> "+count[0]+"÷"+count[2]+"/"+count[3]+"="+an2+"/"+an3);
-				}
-				else if(count[1]!=1&&count[3]==1){
-					System.out.println("<"+(i+1)+"> "+count[0]+"/"+count[1]+"÷"+count[2]+"="+an2+"/"+an3);
-				}
-				else if(count[1]!=1&&count[3]!=1){
-					System.out.println("<"+(i+1)+"> "+count[0]+"/"+count[1]+"÷"+count[2]+"/"+count[3]+"="+an2+"/"+an3);
-				}
-				System.out.println(n1);
+				int[] arr2 = new int[] { count[0], count[1],count[2],count[4],an2,an3,n1 };
+				String str1 = Arrays.toString(arr2); 
+			    if(duibi(str1)==0){i--;}
+				else{
+					if(gongyueshu(count[0],count[1])==count[1]&&gongyueshu(count[2],count[3])==count[3]){
+						System.out.println("<"+(i+1)+"> "+(x/y)+" ÷ "+(z/p)+" =");
+                       }
+					else if(gongyueshu(count[0],count[1])==count[1]&&gongyueshu(count[2],count[3])!=count[3]){ 
+					     if(d2[0]==0){
+							System.out.println("<"+(i+1)+"> "+(x/y)+" ÷ "+d2[1]+"/"+d2[2]+" =");
+                          }else{
+							System.out.println("<"+(i+1)+"> "+(x/y)+" ÷ "+d2[0]+"'"+d2[1]+"/"+d2[2]+" =");
+                            }
+                               }
+					else if(gongyueshu(count[0],count[1])!=count[1]&&gongyueshu(count[2],count[3])==count[3]){
+						if(d1[0]==0){
+		                    System.out.println("<"+(i+1)+"> "+d1[1]+"/"+d1[2]+" ÷ "+(z/p)+" =");
+                          }else{
+						System.out.println("<"+(i+1)+"> "+d1[0]+"'"+d1[1]+"/"+d1[2]+" ÷ "+(z/p)+" =");
+                       }
+                       }
+					else if(gongyueshu(count[0],count[1])!=count[1]&&gongyueshu(count[2],count[3])!=count[3]){
+						if(d1[0]==0&&d2[0]==0){
+							System.out.println("<"+(i+1)+"> "+d1[1]+"/"+d1[2]+" ÷ "+d2[1]+"/"+d2[2]+" =");
+                            }else if(d1[0]!=0&&d2[0]==0){
+							System.out.println("<"+(i+1)+"> "+d1[0]+"'"+d1[1]+"/"+d1[2]+" ÷ "+d2[1]+"/"+d2[2]+" =");
+                            }else if(d1[0]==0&&d2[0]!=0){
+							System.out.println("<"+(i+1)+"> "+d1[1]+"/"+d1[2]+" ÷ "+d2[0]+"'"+d2[1]+"/"+d2[2]+" =");
+                              }else if(d1[0]!=0&&d2[0]!=0){
+						System.out.println("<"+(i+1)+"> "+d1[0]+"'"+d1[1]+"/"+d1[2]+" ÷ "+d2[0]+"'"+d2[1]+"/"+d2[2]+" =");
+                        }
+					}
+						System.arraycopy(arr2, 0, arr1, 0, arr1.length);
+					    int[] da=new int[3];
+						da=zhenfenshu(an2/gongyueshu(an2,an3),an3/gongyueshu(an2,an3));
+					daan(da,Answer);
+                         }						
 			    i++;
 			    break;
-			}
-		}
+                  }
+                   }
+                    
 		else if(yunsuanfu()=='+'){//当运算符为"+"号
-		    int an4=(count[0]*(n1/count[1]))+(count[2]*(n1/count[3]));
-			if(count[1]==1&&count[3]==1){
-				System.out.println("<"+(i+1)+"> "+count[0]+"+"+count[2]+"="+an4+"/"+n1);
-			}
-			else if(count[1]==1&&count[3]!=1){ 
-				System.out.println("<"+(i+1)+"> "+count[0]+"+"+count[2]+"/"+count[3]+"="+an4+"/"+n1);
-			}
-			else if(count[1]!=1&&count[3]==1){
-				System.out.println("<"+(i+1)+"> "+count[0]+"/"+count[1]+"+"+count[2]+"="+an4+"/"+n1);
-			}
-			else if(count[1]!=1&&count[3]!=1){
-				System.out.println("<"+(i+1)+"> "+count[0]+"/"+count[1]+"+"+count[2]+"/"+count[3]+"="+an4+"/"+n1);
-			}
-			System.out.println(n1);
-			i++;
+			if(count[1]==0||count[3]==0){break;}
+			int an4=(count[0]*(n1/count[1]))+(count[2]*(n1/count[3]));
+				int[] arr2 = new int[] { count[0], count[1],count[2],count[4],an4,n1 };
+				String str1 = Arrays.toString(arr2); 
+			    if(duibi(str1)==0){break;}
+				else{
+				if(gongyueshu(count[0],count[1])==count[1]&&gongyueshu(count[2],count[3])==count[3]){
+					System.out.println("<"+(i+1)+"> "+(x/y)+" + "+(z/p)+" =");
+				}
+				else if(gongyueshu(count[0],count[1])==count[1]&&gongyueshu(count[2],count[3])!=count[3]){ 
+				     if(d2[0]==0){
+						System.out.println("<"+(i+1)+"> "+(x/y)+" + "+d2[1]+"/"+d2[2]+" =");
+					}else{
+						System.out.println("<"+(i+1)+"> "+(x/y)+" + "+d2[0]+"'"+d2[1]+"/"+d2[2]+" =");
+					}
+				}
+				else if(gongyueshu(count[0],count[1])!=count[1]&&gongyueshu(count[2],count[3])==count[3]){
+					if(d1[0]==0){
+	                    System.out.println("<"+(i+1)+"> "+d1[1]+"/"+d1[2]+" + "+(z/p)+" =");
+					}else{
+					System.out.println("<"+(i+1)+"> "+d1[0]+"'"+d1[1]+"/"+d1[2]+" + "+(z/p)+" =");
+					}
+				}
+				else if(gongyueshu(count[0],count[1])!=count[1]&&gongyueshu(count[2],count[3])!=count[3]){
+					if(d1[0]==0&&d2[0]==0){
+						System.out.println("<"+(i+1)+"> "+d1[1]+"/"+d1[2]+" + "+d2[1]+"/"+d2[2]+" =");
+					}else if(d1[0]!=0&&d2[0]==0){
+						System.out.println("<"+(i+1)+"> "+d1[0]+"'"+d1[1]+"/"+d1[2]+" + "+d2[1]+"/"+d2[2]+" =");
+					}else if(d1[0]==0&&d2[0]!=0){
+						System.out.println("<"+(i+1)+"> "+d1[1]+"/"+d1[2]+" + "+d2[0]+"'"+d2[1]+"/"+d2[2]+" =");
+					}else if(d1[0]!=0&&d2[0]!=0){
+					System.out.println("<"+(i+1)+"> "+d1[0]+"'"+d1[1]+"/"+d1[2]+" + "+d2[0]+"'"+d2[1]+"/"+d2[2]+" =");
+					}
+				}
+				System.arraycopy(arr2, 0, arr1, 0, arr1.length);
+			    int[] da=new int[3];
+				da=zhenfenshu(an4/gongyueshu(an4,n1),n1/gongyueshu(an4,n1));
+				daan(da,Answer);
+				
+				i++;
+				break;
+				}
+			
 		}
 		else if(yunsuanfu()=='x'){//当运算符为"x"号
 			int an5=count[0]*count[2];
 			int an6=count[1]*count[3];
-			if(count[1]==1&&count[3]==1){
-				System.out.println("<"+(i+1)+"> "+count[0]+"x"+count[2]+"="+an5+"/"+an6);
-			}
-			else if(count[1]==1&&count[3]!=1){ 
-				System.out.println("<"+(i+1)+"> "+count[0]+"x"+count[2]+"/"+count[3]+"="+an5+"/"+an6);
-			}
-			else if(count[1]!=1&&count[3]==1){
-				System.out.println("<"+(i+1)+"> "+count[0]+"/"+count[1]+"x"+count[2]+"="+an5+"/"+an6);
-			}
-			else if(count[1]!=1&&count[3]!=1){
-				System.out.println("<"+(i+1)+"> "+count[0]+"/"+count[1]+"x"+count[2]+"/"+count[3]+"="+an5+"/"+an6);
-			}
-			System.out.println(n1);
+			int[] arr2 = new int[] { count[0], count[1],count[2],count[4],an5,an6,n1 };
+			String str1 = Arrays.toString(arr2); 
+		    if(duibi(str1)==0){i--;}
+			else{
+				if(gongyueshu(count[0],count[1])==count[1]&&gongyueshu(count[2],count[3])==count[3]){
+					System.out.println("<"+(i+1)+"> "+(x/y)+" x "+(z/p)+" =");
+                   }
+				else if(gongyueshu(count[0],count[1])==count[1]&&gongyueshu(count[2],count[3])!=count[3]){ 
+				     if(d2[0]==0){
+						System.out.println("<"+(i+1)+"> "+(x/y)+" x "+d2[1]+"/"+d2[2]+" =");
+                      }else{
+						System.out.println("<"+(i+1)+"> "+(x/y)+" x "+d2[0]+"'"+d2[1]+"/"+d2[2]+" =");
+                        }
+                           }
+				else if(gongyueshu(count[0],count[1])!=count[1]&&gongyueshu(count[2],count[3])==count[3]){
+					if(d1[0]==0){
+	                    System.out.println("<"+(i+1)+"> "+d1[1]+"/"+d1[2]+" x "+(z/p)+" =");
+                      }else{
+					System.out.println("<"+(i+1)+"> "+d1[0]+"'"+d1[1]+"/"+d1[2]+" x "+(z/p)+" =");
+                   }
+                   }
+				else if(gongyueshu(count[0],count[1])!=count[1]&&gongyueshu(count[2],count[3])!=count[3]){
+					if(d1[0]==0&&d2[0]==0){
+						System.out.println("<"+(i+1)+"> "+d1[1]+"/"+d1[2]+" x "+d2[1]+"/"+d2[2]+" =");
+                        }else if(d1[0]!=0&&d2[0]==0){
+						System.out.println("<"+(i+1)+"> "+d1[0]+"'"+d1[1]+"/"+d1[2]+" x "+d2[1]+"/"+d2[2]+" =");
+                        }else if(d1[0]==0&&d2[0]!=0){
+						System.out.println("<"+(i+1)+"> "+d1[1]+"/"+d1[2]+" x "+d2[0]+"'"+d2[1]+"/"+d2[2]+" =");
+                          }else if(d1[0]!=0&&d2[0]!=0){
+					System.out.println("<"+(i+1)+"> "+d1[0]+"'"+d1[1]+"/"+d1[2]+" x "+d2[0]+"'"+d2[1]+"/"+d2[2]+" =");
+                    }
+				}
+					System.arraycopy(arr2, 0, arr1, 0, arr1.length);
+				    int[] da=new int[3];
+					da=zhenfenshu(an5/gongyueshu(an5,an6),an6/gongyueshu(an5,an6));
+					daan(da,Answer);
+                     }						
+		    i++;
+		    break;
+		}
+	} 
+	while(a==2){
+		ArrayList<Integer>Answer1=new ArrayList<Integer>();
+		ArrayList<String>Question1=new ArrayList<String>();
+		int g=1+(int)(Math.random()*2);
+		if(g==1){//(a[]b)[]c类型
+			danyunsuan(count[0],count[1],count[2],count[3],Answer1,Question1);
+			if(Answer1.size()==0||Question1.size()==0){break;}
+			int a1=Answer1.get(0);int a2=Answer1.get(1);
+			Answer1.clear();
+			char h=danyunsuan(a1,a2,count[4],count[5],Answer1,Question1);
+			int[] da=new int[3];
+			da=zhenfenshu(count[4],count[5]);
+			if(da[0]==0){
+				if(da[1]==da[2]){
+			System.out.println("<"+(i+1)+">"+"("+(Question1.get(0))+")"+" "+h+" "+1+"=");
+				}else if(da[1]!=da[2]){
+					System.out.println("<"+(i+1)+">"+"("+(Question1.get(0))+")"+" "+h+" "+da[1]+"/"+da[2]+"=");
+				}
+			}else if(da[0]!=0){
+				if(da[1]!=da[2]){
+				System.out.println("<"+(i+1)+">"+"("+(Question1.get(0))+")"+" "+h+" "+da[0]+"'"+da[1]+"/"+da[2]+"=");
+				}else if(da[1]==da[2]){
+					System.out.println("<"+(i+1)+">"+"("+(Question1.get(0))+")"+" "+h+" "+(da[0]+1)+"=");
+				}
+				}
+			if(Answer1.size()==0||Question1.size()==0){break;}
+			int[] w=new int[]{Answer1.get(0),Answer1.get(1)};
+			int[] da1=new int[3];
+			da1=zhenfenshu(w[0]/gongyueshu(w[0],w[1]),w[1]/gongyueshu(w[0],w[1]));
+			daan(da1,Answer);
 			i++;
-		}*/
-	}
-	/*while(a==2){
-		
-	}*/
+			Answer1.clear();
+		    Question1.clear();
+		    break;
+			}else if(g==2){//a[](b[]c)类型
+			   danyunsuan(count[2],count[3],count[4],count[5],Answer1,Question1);
+			     if(Answer1.size()==0||Question1.size()==0){break;}  
+			     int a1=Answer1.get(0);int a2=Answer1.get(1);
+			     Answer1.clear();
+			     char h=danyunsuan(count[0],count[1],a1,a2,Answer1,Question1); 
+			     int[] da=new int[3];   
+			     da=zhenfenshu(count[0],count[1]);
+			     if(da[0]==0){
+				if(da[1]==da[2]){
+			System.out.println("<"+(i+1)+">"+1+" "+h+" "+"("+(Question1.get(0))+")"+"=");
+				}else if(da[1]!=da[2]){
+					System.out.println("<"+(i+1)+">"+da[1]+"/"+da[2]+" "+h+" "+"("+(Question1.get(0))+")"+"=");
+				}
+			}else if(da[0]!=0){
+				if(da[1]!=da[2]){
+				System.out.println("<"+(i+1)+">"+da[0]+"'"+da[1]+"/"+da[2]+" "+h+" "+"("+(Question1.get(0))+")"+"=");
+				}else if(da[1]==da[2]){
+					System.out.println("<"+(i+1)+">"+(da[0]+1)+" "+h+" "+"("+(Question1.get(0))+")"+"=");
+				}
+				}
+			if(Answer1.size()==0||Question1.size()==0){break;}
+			int[] w=new int[]{Answer1.get(0),Answer1.get(1)};
+			int[] da1=new int[3];
+			da1=zhenfenshu(w[0]/gongyueshu(w[0],w[1]),w[1]/gongyueshu(w[0],w[1]));
+			daan(da1,Answer);
+			i++;
+			Answer1.clear();
+		    Question1.clear();
+		    break;
+			}
+		}
+    /*   while(a==3){//三个运算符
+    	   ArrayList<Integer>Answer2=new ArrayList<Integer>();
+   		   ArrayList<String>Question2=new ArrayList<String>();
+   		   int f=1+(int)(Math.random()*8);
+   		   if(f==1){//(a[]b)[]c[]d
+   			   danyunsuan(count[0],count[1],count[2],count[3],Answer2,Question2);
+   			   if(Answer2.size()==0||Question2.size()==0){break;}  
+		       int a1=Answer2.get(0);int a2=Answer2.get(1);
+		       Answer2.clear();
+   		   }
+       }*/
 }
-	//da=daan()
 	System.out.println(Answer);
+} 
 }
-}
+
