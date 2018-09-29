@@ -560,6 +560,7 @@ public class opera {
 	   		   }
 	       }
 	}
+		
 		String shizi = export.listostring(Question);
 	    String answer = export.listostring(Answer);
 	    export.TextToFile("Exercises", shizi);
@@ -583,7 +584,6 @@ public class opera {
 			ArrayList<String>Answer21 = export.getlines(file1);
 			String D1 = export.duibi(Answer, Answer21).toString();
 			export.TextToFile("Grade"+o, D1);
-			
 		}else {System.out.println("感谢您的使用。");break;}
 		}
 	} 

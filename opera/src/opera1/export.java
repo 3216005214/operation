@@ -1,18 +1,17 @@
 package opera1;
 
-import java.awt.List;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.StringWriter;
 import java.util.ArrayList;
 
 public class export {
 	public static void main (String[] args) {
 	}
 	
+	//输出文件
 	public static void TextToFile(String strFilename, String strBuffer) {
 		try {
 			//创建文件
@@ -28,6 +27,7 @@ public class export {
 		}
 	}
 	
+	//格式转换
 	public static String listostring(ArrayList<String> list) {
 		if(list == null) {
 			return null;
@@ -41,6 +41,7 @@ public class export {
 		return result.toString();
 	}
 	
+	//读取文件内容
 	public static ArrayList<String> getlines(String filename1) {
 		File file = new File(filename1);
 		ArrayList<String>Answer1=new ArrayList<String>();
@@ -62,6 +63,7 @@ public class export {
 		return Answer1;
       }
 	
+	//对比答案
 	public  static StringBuffer  duibi (ArrayList<String> A , ArrayList<String> B) {
 		StringBuffer Right = new StringBuffer(); //存正确的题号
 		StringBuffer Fault = new StringBuffer();//存错误的题号
